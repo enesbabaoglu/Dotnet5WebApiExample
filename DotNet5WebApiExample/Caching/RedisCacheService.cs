@@ -15,13 +15,14 @@ namespace DotNet5WebApiExample.Caching
         }
         public Task<string> GetSetCache(string key, string value)
         {
-            _redisCacheClient.GetDbFromConfiguration().AddAsync<string>(key, value, DateTimeOffset.Now.AddMinutes(2));
+           _redisCacheClient.GetDbFromConfiguration().AddAsync<string>(key, value, DateTimeOffset.Now.AddMinutes(2));
             return GetValueOfKey(key);
         }
-        public Task<Object> GetSetObjectCache(string key, Object tObject)
+        public Task<Object> GetSetObjectCache<Object>(string key, Object tObject)
         {
             _redisCacheClient.GetDbFromConfiguration().AddAsync<Object>(key, tObject, DateTimeOffset.Now.AddHours(1));
-            return GetObjectOfKey(key,tObject);
+             
+            return _redisCacheClient.GetDbFromConfiguration().GetAsync<Object>(key);
         }
         public Task<IEnumerable<string>> SearchKey(string key)
         {
@@ -33,11 +34,7 @@ namespace DotNet5WebApiExample.Caching
             var allKeys = _redisCacheClient.GetDbFromConfiguration().GetAsync<string>(key);
             return allKeys;
         }
-        public Task<Object> GetObjectOfKey(string key,Object tObject)
-        {
-            var allKeys = _redisCacheClient.GetDbFromConfiguration().GetAsync<Object>(key);
-            return allKeys;
-        }
+     
         public void Remove(string key)
         {
             _redisCacheClient.GetDbFromConfiguration().RemoveAsync(key);

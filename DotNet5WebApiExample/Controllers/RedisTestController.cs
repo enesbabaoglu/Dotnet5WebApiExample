@@ -22,12 +22,12 @@ namespace DotNet5WebApiExample.Controllers
             _redisCacheService = redisCacheService;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("get-set-cache")]
-        public async Task<IActionResult> GetSetCache()
+        public async Task<IActionResult> GetSetCache(string key,string value)
         {
 
-            var keyValue = await _redisCacheService.GetSetCache("myname", "enes");
+            var keyValue = await _redisCacheService.GetSetCache(key, value);
         
             return Ok(keyValue);
         }
@@ -46,31 +46,24 @@ namespace DotNet5WebApiExample.Controllers
                     Phone = "1234567890"
                 }
             };
-            var ObjValue= await  _redisCacheService.GetSetObjectCache("student", student);
+            var ObjValue= await  _redisCacheService.GetSetObjectCache<Student>("student", student);
             return Ok(ObjValue);
         }
-        [HttpGet]
-        [Route("get-type-cache")]
-        public async Task<IActionResult> GetObjectCach()
-        {
-            var student = new Student();
-            var ObjValue = await _redisCacheService.GetObjectOfKey("student",student);
-            return Ok(ObjValue);
-        }
-        [HttpGet]
+  
+        [HttpPost]
         [Route("search-cache-keys")]
-        public async Task<IActionResult> SearchKeys()
+        public async Task<IActionResult> SearchKeys(string key)
         {
-            var allKeys = await _redisCacheService.SearchKey("stu");
+            var allKeys = await _redisCacheService.SearchKey(key);
             return Ok(allKeys);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("remove")]
-        public async Task<IActionResult> Remove()
+        public async Task<IActionResult> Remove(string key)
         {
-            _redisCacheService.Remove("myname");
-            return Ok();
+             _redisCacheService.Remove(key);
+            return Ok($"{key} - silindi.");
         }
 
    
@@ -80,7 +73,7 @@ namespace DotNet5WebApiExample.Controllers
         public async Task<IActionResult> Clear()
         {
             _redisCacheService.Clear();
-            return Ok();
+            return Ok("Cleared.");
         }
     }
 
