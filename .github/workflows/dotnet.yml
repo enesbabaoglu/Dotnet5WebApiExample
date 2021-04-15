@@ -18,7 +18,7 @@ jobs:
       with:
         dotnet-version: 5.0.202
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore --force
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1.0.5
     
