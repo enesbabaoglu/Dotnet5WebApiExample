@@ -26,7 +26,7 @@ jobs:
       run: nuget restore ${{ github.workspace }}/DotNet5WebApiExample.sln
       
     - name: Build with dotnet
-      run: dotnet build --configuration Release -o c:/_build
+      run: dotnet build --configuration Release
     - name: Publish
       run: dotnet publish --no-build -c Release -o c:/publish
     - name: Upload artifact
