@@ -9,7 +9,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: [dotnet]
 
     steps:
     - uses: actions/checkout@v2
@@ -26,14 +26,14 @@ jobs:
       run: nuget restore ${{ github.workspace }}/DotNet5WebApiExample.sln
       
     - name: Build with dotnet
-      run: dotnet build --configuration Release
+      run: dotnet build --configuration Release -o c:/_build
     - name: Publish
-      run: dotnet publish --no-build -c Release -o ${{ github.workspace }}/publish
+      run: dotnet publish --no-build -c Release -o c:/publish
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with: 
        name: artifact
-       path: ${{ github.workspace }}/publish
+       path: c:/publish
   
        
     - name: Test
