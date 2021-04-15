@@ -36,9 +36,9 @@ jobs:
        path: c:/publish
     - name: deploy
       run: |
-        $Files = "c:\publish"
+        $Files = "c:\publish\*"
         $Destination = "C:\_deploy"
-        copy-item -Path (Get-Item -Path "$Files\Multinet.AppHosts.Gazel.Portal.Soa\*").FullName -Include * -Destination "$Destination\test-gazelportal-service.inventiv.services" -Force -Recurse
+        copy-item -Path $Files -Include * -Destination $Destination -Force -Recurse
 
     - name: Test
       run: dotnet test --verbosity normal
