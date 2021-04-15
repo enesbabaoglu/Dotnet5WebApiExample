@@ -34,7 +34,11 @@ jobs:
       with: 
        name: artifact
        path: c:/publish
-  
-       
+    - name: deploy
+      run: |
+        $Files = "c:\publish"
+        $Destination = "C:\_deploy"
+        copy-item -Path (Get-Item -Path "$Files\Multinet.AppHosts.Gazel.Portal.Soa\*").FullName -Include * -Destination "$Destination\test-gazelportal-service.inventiv.services" -Force -Recurse
+
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --verbosity normal
