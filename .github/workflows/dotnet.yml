@@ -22,15 +22,16 @@ jobs:
     - name: Build with dotnet
       run: dotnet build --configuration Release
     - name: Publish
-      run: dotnet publish --no-build -c Release -o /home/runner/work/Dotnet5WebApiExample/Dotnet5WebApiExample/DotNet5WebApiExample/publish
+      run: dotnet publish --no-build -c Release -o ${{ github.workspace }}/publish
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with: 
        name: artifact
-       path: /home/runner/work/Dotnet5WebApiExample/Dotnet5WebApiExample/DotNet5WebApiExample/publish
+       path: ${{ github.workspace }}/publish
     - name: Download a Build Artifact
       uses: actions/download-artifact@v2
       with:
        name: artifact
+       
     - name: Test
       run: dotnet test --no-build --verbosity normal
