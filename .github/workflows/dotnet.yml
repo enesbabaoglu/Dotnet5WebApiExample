@@ -19,6 +19,12 @@ jobs:
         dotnet-version: 5.0.202
     - name: Restore dependencies
       run: dotnet restore
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+    
+    - name: Restore NuGet packages
+      run: nuget restore ${{ github.workspace }}\DotNet5WebApiExample.sln
+      
     - name: Build with dotnet
       run: dotnet build --configuration Release
     - name: Publish
@@ -28,10 +34,7 @@ jobs:
       with: 
        name: artifact
        path: ${{ github.workspace }}/publish
-    - name: Download a Build Artifact
-      uses: actions/download-artifact@v2
-      with:
-       name: artifact
+  
        
     - name: Test
       run: dotnet test --no-build --verbosity normal
