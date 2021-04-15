@@ -20,7 +20,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build with dotnet
-      run: dotnet build DotNet5WebApiExample/Dotnet5WebApiExample.csproj --configuration Release
+      run: dotnet build --configuration Release
     - name: Publish
       run: dotnet publish --no-build -c Release -o ./publish
     - name: Upload artifact
