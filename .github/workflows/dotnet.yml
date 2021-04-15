@@ -9,7 +9,7 @@ on:
 jobs:
   build:
 
-    runs-on: [dotnet]
+    runs-on: [webApi]
 
     steps:
     - uses: actions/checkout@v2
