@@ -1,5 +1,7 @@
 # Dotnet5WebApiExample
 
+[![PROJECT CI REPORT](https://github.com/enesbabaoglu/Dotnet5WebApiExample/actions/workflows/dotnet.yml/badge.svg)](https://github.com/enesbabaoglu/Dotnet5WebApiExample/actions/workflows/dotnet.yml)
+
 ## 1 - Redis Implementation
    - Docker Install (https://docs.docker.com/desktop/)
    - docker pull redis ( https://hub.docker.com/_/redis )
