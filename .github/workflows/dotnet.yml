@@ -1,0 +1,36 @@
+name: .NET
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build with dotnet
+      run: dotnet build Dotnet5WebApiExample.sln --configuration Release
+    - name: Publish
+      run: dotnet publish --no-build -c Release -o ./publish
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with: 
+       name: artifact
+       path: ./publish
+    - name: Download a Build Artifact
+      uses: actions/download-artifact@v2
+      with:
+       name: artifact
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
