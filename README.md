@@ -21,4 +21,5 @@ GITHUB ACTIONS :
 
    - "**Microsoft.Extensions.Logging.Log4Net.AspNetCore**" nuget package added project
    - Added *ConfigureLogging* in **Program.cs**
+   - Added log4net.config in project
    - And Inject ILogger interface in class like RedisTestController.cs and use it. (**exmpl : _logger.LogInformation("example")**)
