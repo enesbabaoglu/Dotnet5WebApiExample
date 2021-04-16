@@ -1,0 +1,44 @@
+name: WEPAPI CI 
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: [webApi]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.202
+    - name: Restore dependencies
+      run: dotnet restore --force
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+    
+    - name: Restore NuGet packages
+      run: nuget restore ${{ github.workspace }}/DotNet5WebApiExample.sln
+      
+    - name: Build with dotnet
+      run: dotnet build --configuration Release
+    - name: Publish
+      run: dotnet publish --no-build -c Release -o c:/publish
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with: 
+       name: artifact
+       path: c:/publish
+    - name: deploy
+      run: |
+        $Files = "c:\publish\*"
+        $Destination = "C:\_deploy"
+        copy-item -Path $Files -Include * -Destination $Destination -Force -Recurse
+
+    - name: Test
+      run: dotnet test --verbosity normal
