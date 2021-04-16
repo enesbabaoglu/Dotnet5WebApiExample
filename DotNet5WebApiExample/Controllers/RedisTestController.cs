@@ -26,7 +26,7 @@ namespace DotNet5WebApiExample.Controllers
         [Route("get-set-cache")]
         public async Task<IActionResult> GetSetCache(string key,string value)
         {
-
+            _logger.LogInformation($"The key was adding cache = {key}");
             var keyValue = await _redisCacheService.GetSetCache(key, value);
         
             return Ok(keyValue);
@@ -60,7 +60,7 @@ namespace DotNet5WebApiExample.Controllers
 
         [HttpPost]
         [Route("remove")]
-        public async Task<IActionResult> Remove(string key)
+        public IActionResult Remove(string key)
         {
              _redisCacheService.Remove(key);
             return Ok($"{key} - silindi.");
@@ -70,7 +70,7 @@ namespace DotNet5WebApiExample.Controllers
 
         [HttpGet]
         [Route("clear")]
-        public async Task<IActionResult> Clear()
+        public IActionResult Clear()
         {
             _redisCacheService.Clear();
             return Ok("Cleared.");

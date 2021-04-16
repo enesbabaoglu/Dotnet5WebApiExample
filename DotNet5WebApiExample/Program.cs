@@ -17,7 +17,11 @@ namespace DotNet5WebApiExample
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+            Host.CreateDefaultBuilder(args).ConfigureLogging(
+                (hostingContext, logging) =>
+                {
+                    logging.AddLog4Net("log4net.config", true);
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
