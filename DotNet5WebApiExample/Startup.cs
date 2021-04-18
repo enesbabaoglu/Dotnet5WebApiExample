@@ -13,6 +13,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DotNet5WebApiExample.Repositories.Concrete;
+using Microsoft.EntityFrameworkCore;
 
 namespace DotNet5WebApiExample
 {
@@ -34,10 +36,11 @@ namespace DotNet5WebApiExample
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DotNet5WebApiExample", Version = "v1" });
             });
-            services.AddStackExchangeRedisExtensions<NewtonsoftSerializer>((options) =>
-            {
-            return Configuration.GetSection("Redis").Get<RedisConfiguration>();
-            });
+            services.AddStackExchangeRedisExtensions<NewtonsoftSerializer>((options) => Configuration.GetSection("Redis").Get<RedisConfiguration>());
+            
+            services.AddDbContext<WebApiContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("Data Source=DESKTOP-AJT2GI5; Initial Catalog=WebApiDb;Integrated Security=SSPI;")));
+           
             services.AddSingleton<IRedisCacheService, RedisCacheService>();
         }
 

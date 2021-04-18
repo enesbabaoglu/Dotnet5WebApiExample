@@ -23,3 +23,15 @@ GITHUB ACTIONS :
    - Added *ConfigureLogging* in **Program.cs**
    - Added log4net.config in project
    - And Inject ILogger interface in class like RedisTestController.cs and use it. (**exmpl : _logger.LogInformation("example")**)
+
+## 3 - EntityFrameworkCore Implemantation 
+
+   - Add Nuget Packages 
+      - Microsoft.EntityFrameworkCore
+      - Microsoft.EntityFrameworkCore.Design
+      - Microsoft.EntityFrameworkCore.Tools
+      - Microsoft.EntityFrameworkCore.SqlServer
+   - Create **WebApiContext** in Repositories/Concrete
+   - Add implementation *Startup.cs*
+   - Create *IGenericRepository* interface for generic db action in Repository/Abstract
+   - Create *GenericRepository* class and use WebApiContext in Repository/Concrete 
