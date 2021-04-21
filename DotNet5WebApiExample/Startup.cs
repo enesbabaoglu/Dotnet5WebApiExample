@@ -27,6 +27,7 @@ namespace DotNet5WebApiExample
 
         public IConfiguration Configuration { get; }
 
+        private readonly string MyAllowOrigin = "_myAllowOrigin";
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -42,6 +43,19 @@ namespace DotNet5WebApiExample
                 options.UseSqlServer(Configuration.GetConnectionString("Data Source=DESKTOP-AJT2GI5; Initial Catalog=WebApiDb;Integrated Security=SSPI;")));
            
             services.AddSingleton<IRedisCacheService, RedisCacheService>();
+
+            services.AddCors(options => options.AddDefaultPolicy(
+                builder =>
+                {
+                    builder
+                        .WithOrigins("http://localhost:4200");
+
+                    //.WithMethods("GET","POST","DELETE") 
+                    //.AllowAnyOrigin()
+                    //.AllowAnyHeader()
+                    //.AllowAnyMethod();
+                }
+                ));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +69,8 @@ namespace DotNet5WebApiExample
             }
 
             app.UseRouting();
+            
+            app.UseCors();//Default policy eklendiði için policy ismi eklemeye gerek yok.
 
             app.UseAuthorization();
 
