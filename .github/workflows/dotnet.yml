@@ -2,11 +2,12 @@ name: WEPAPI CI
 
 on:
   workflow_dispatch:
-      inputs:
-      description: 'Environment'
+     inputs:
+      project:
+        description: 'Environment'
+        required: true
         options: ['production', 'staging', 'development']
         default: 'development'
-        required: true
 jobs:
   build:
 
