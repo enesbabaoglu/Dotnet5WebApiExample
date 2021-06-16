@@ -3,10 +3,10 @@ name: WEPAPI CI
 on:
   workflow_dispatch:
       inputs:
-        git-ref:
-          description: Git Ref (Optional)    
-          required: false
-
+      description: 'Environment'
+      options: ['production', 'staging', 'development']
+      default: 'development'
+       required: true
 jobs:
   build:
 
